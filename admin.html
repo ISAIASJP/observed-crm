@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBSERVED | Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body data-page="admin">
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="img/logo-observed.png" alt="Logo OBSERVED">
+      </div>
+      <h1>OBSERVED</h1>
+      <p>Acceso privado al panel CRM + ERP</p>
+      <div class="login-form">
+        <input class="input" id="loginUser" type="text" placeholder="Usuario">
+        <input class="input" id="loginPass" type="password" placeholder="Contraseña">
+        <button class="btn btn-primary" id="loginBtn">Ingresar</button>
+        <div class="login-error" id="loginError"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="img/logo-observed.png" alt="Logo OBSERVED">
+        </div>
+        <div class="brand-info">
+          <h1>OBSERVED</h1>
+          <p>CRM + ERP</p>
+          <small>Clientes, ventas, stock y tienda</small>
+          <small>Todo conectado</small>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#dashboard" class="active">🏠 Dashboard</a>
+        <a href="#productos">🧥 Productos</a>
+        <a href="#clientes">👥 Clientes</a>
+        <a href="#leads">🎯 Leads</a>
+        <a href="#pedidos">🛒 Pedidos</a>
+        <a href="#boletas">🧾 Boletas</a>
+        <a href="#caja">💸 Caja</a>
+        <a href="#tareas">✅ Tareas</a>
+        <a href="#analisis">📊 Análisis</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="side-card">
+          <h3>SISTEMA DIFERENTE</h3>
+          <p>No solo administra: conecta CRM, ERP y tienda pública en una sola experiencia premium.</p>
+          <span class="tag">🔥 Visual + ventas</span>
+        </div>
+        <a href="tienda.html" class="btn btn-soft">Ver tienda</a>
+        <button class="btn btn-dark" id="logoutBtn">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section class="topbar" id="dashboard">
+        <div>
+          <h2>OBSERVED Admin</h2>
+          <p>Panel visual premium con productos, clientes, caja y tienda conectada.</p>
+        </div>
+
+        <div class="top-actions">
+          <input class="search" id="globalSearch" type="text" placeholder="Buscar cliente, producto o pedido...">
+          <a class="btn btn-primary" href="tienda.html" target="_blank">Abrir tienda</a>
+        </div>
+      </section>
+
+      <div class="top-note" id="topSummary">
+        Panel activo.
+      </div>
+
+      <section class="cards">
+        <div class="card">
+          <div class="card-head">
+            <span>Ventas</span>
+            <div class="icon">💸</div>
+          </div>
+          <div class="value" id="kpiVentas">S/ 0.00</div>
+          <div class="meta">Ingresos de pedidos registrados</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span>Ganancia</span>
+            <div class="icon">📈</div>
+          </div>
+          <div class="value" id="kpiGanancia">S/ 0.00</div>
+          <div class="meta">Estimación según costo y gastos</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span>Pedidos</span>
+            <div class="icon">📦</div>
+          </div>
+          <div class="value" id="kpiPedidos">0</div>
+          <div class="meta">Registrados en el sistema</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span>Clientes</span>
+            <div class="icon">👥</div>
+          </div>
+          <div class="value" id="kpiClientes">0</div>
+          <div class="meta">Base actual de clientes</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span>Leads abiertos</span>
+            <div class="icon">🎯</div>
+          </div>
+          <div class="value" id="kpiLeads">0</div>
+          <div class="meta">Seguimientos pendientes</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <span>Stock total</span>
+            <div class="icon">🧾</div>
+          </div>
+          <div class="value" id="kpiStock">0</div>
+          <div class="meta">Unidades disponibles</div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Ventas por producto</h3>
+              <p>Visual rápido del ERP</p>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Pipeline CRM</h3>
+              <p>Leads por etapa</p>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="leadChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid2" id="productos">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Agregar producto</h3>
+              <p>Sin tocar código</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <input class="input" id="prodName" type="text" placeholder="Nombre">
+            <input class="input" id="prodPrice" type="number" min="0" step="0.01" placeholder="Precio">
+            <input class="input" id="prodCost" type="number" min="0" step="0.01" placeholder="Costo">
+            <input class="input" id="prodStock" type="number" min="0" step="1" placeholder="Stock">
+          </div>
+
+          <div class="section-space"></div>
+
+          <div class="form-grid">
+            <input class="input" id="prodSizes" type="text" placeholder="Tallas ej: S,M,L,XL">
+            <input class="input" id="prodTags" type="text" placeholder="Tag ej: Top seller">
+            <select class="select" id="prodActive">
+              <option value="true">Visible en tienda</option>
+              <option value="false">Oculto</option>
+            </select>
+            <select class="select" id="prodImage">
+              <option value="img/hoodie-black.png">hoodie-black.png</option>
+              <option value="img/hoodie-white.png">hoodie-white.png</option>
+              <option value="img/polo-oversized.png">polo-oversized.png</option>
+              <option value="img/gorra.png">gorra.png</option>
+            </select>
+          </div>
+
+          <div class="section-space"></div>
+
+          <textarea class="textarea" id="prodDescription" placeholder="Descripción"></textarea>
+
+          <div class="section-space"></div>
+          <button class="btn btn-primary" id="addProductBtn">Guardar producto</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Productos del catálogo</h3>
+              <p>Lo visible aquí se puede reflejar en tienda</p>
+            </div>
+          </div>
+
+          <div id="adminCatalog" class="store-grid admin-grid"></div>
+        </div>
+      </section>
+
+      <section class="grid2">
+        <div class="panel" id="clientes">
+          <div class="panel-head">
+            <div>
+              <h3>Clientes</h3>
+              <p>CRM con estados</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <input class="input" id="clientName" type="text" placeholder="Nombre completo">
+            <input class="input" id="clientPhone" type="text" placeholder="Teléfono">
+            <input class="input" id="clientEmail" type="text" placeholder="Email / Instagram">
+            <select class="select" id="clientType">
+              <option value="Nuevo">Nuevo</option>
+              <option value="Recurrente">Recurrente</option>
+              <option value="VIP">VIP</option>
+            </select>
+          </div>
+
+          <div class="section-space"></div>
+          <button class="btn btn-primary" id="addClientBtn">Guardar cliente</button>
+
+          <div class="section-space"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Teléfono</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
+                  <th>Total</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="clientsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel" id="leads">
+          <div class="panel-head">
+            <div>
+              <h3>Leads</h3>
+              <p>Seguimiento simple y útil</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <input class="input" id="leadName" type="text" placeholder="Nombre del lead">
+            <input class="input" id="leadPhone" type="text" placeholder="Teléfono">
+            <select class="select" id="leadSource">
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Tienda física">Tienda física</option>
+            </select>
+            <select class="select" id="leadStage">
+              <option value="Nuevo">Nuevo</option>
+              <option value="Contactado">Contactado</option>
+              <option value="Negociación">Negociación</option>
+              <option value="Ganado">Ganado</option>
+            </select>
+          </div>
+
+          <div class="section-space"></div>
+          <button class="btn btn-primary" id="addLeadBtn">Guardar lead</button>
+
+          <div class="section-space"></div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Lead</th>
+                  <th>Teléfono</th>
+                  <th>Origen</th>
+                  <th>Etapa</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody id="leadsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid2" id="pedidos">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Registrar pedido</h3>
+              <p>ERP que conecta cliente y stock</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <select class="select" id="orderClient"></select>
+            <select class="select" id="orderProduct"></select>
+            <input class="input" id="orderQty" type="number" min="1" value="1">
+            <select class="select" id="orderPayment">
+              <option value="Yape">Yape</option>
+              <option value="Plin">Plin</option>
+              <option value="BCP">BCP</option>
+              <option value="Efectivo">Efectivo</option>
+            </select>
+          </div>
+
+          <div class="section-space"></div>
+
+          <div class="form-grid">
+            <select class="select" id="orderChannel">
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Tienda física">Tienda física</option>
+            </select>
+            <select class="select" id="orderStatus">
+              <option value="Preparando">Preparando</option>
+              <option value="Pagado">Pagado</option>
+              <option value="Enviado">Enviado</option>
+              <option value="Entregado">Entregado</option>
+            </select>
+          </div>
+
+          <div class="section-space"></div>
+          <button class="btn btn-primary" id="addOrderBtn">Registrar pedido</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Pedidos</h3>
+              <p>Historial operativo</p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Cliente</th>
+                  <th>Producto</th>
+                  <th>Cant.</th>
+                  <th>Total</th>
+                  <th>Pago</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid2" id="boletas">
+        <div class="panel">
+          <div class="panel-head">
+            <div>
+              <h3>Boletas simuladas</h3>
+              <p>Visual interno por ahora</p>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Número</th>
+                  <th>Cliente</th>
+                  <th>Total</th>
+                  <th>Fecha</th>
+                </tr>
+              </thead>
+              <tbody id="receiptsTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel" id="caja">
+          <div class="panel-head">
+            <div>
+              <h3>Caja y gastos</h3>
+              <p>ERP financiero básico</p>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <input class="input" id="expenseConcept" type="text" placeholder="Concepto">
+            <input class="input" id="expenseAmount" type="number" min="0" step="0.01" placeholder="Monto">
+            <button class="btn btn-primary" id="addExpenseBtn">Guardar gasto</button>
+          </div>
+
+          <div class="section-space"></div>
+
+          <div class="list">
+            <div class="item">
+              <div class="left">
+                <div class="avatar">💰</div>
+                <div class="info">
+                  <h4>Ingresos</h4>
+                  <p>Total de ventas</p>
+                </div>
+              </div>
+              <span class="badge green" id="cashIncome">S/ 0.00</span>
+            </div>
+
+            <div class="item">
+              <div class="left">
+                <div class="avatar">🧾</div>
+                <div class="info">
+                  <h4>Gastos</h4>
+                  <p>Total registrado</p>
+                </div>
+              </div>
+              <span class="badge red" id="cashExpenses">S/ 0.00</span>
+            </div>
+
+            <div class="item">
+              <div class="left">
+                <div class="avatar">📊</div>
+                <div class="info">
+                  <h4>Balance</h4>
+                  <p>Ingreso - gastos</p>
+                </div>
+              </div>
+              <span class="badge blue" id="cashBalance">S/ 0.00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="grid2">
+        <div class="panel" id="tareas">
+          <div class="panel-head">
+            <div>
+              <h3>Tareas</h3>
+              <p>Organización interna</p>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <input class="input" id="taskText" type="text" placeholder="Nueva tarea">
+            <button class="btn btn-primary" id="addTaskBtn">Agregar tarea</button>
+          </div>
+
+          <div class="section-space"></div>
+          <div class="list" id="taskList"></div>
+        </div>
+
+        <div class="panel" id="analisis">
+          <div class="panel-head">
+            <div>
+              <h3>Análisis automáticos</h3>
+              <p>Esto te diferencia de la competencia</p>
+            </div>
+          </div>
+
+          <div class="list" id="insightsList"></div>
+
+          <div class="danger-zone">
+            <button class="btn btn-danger" id="resetDataBtn">Resetear datos</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

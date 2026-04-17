@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OBSERVED | Tienda</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="store">
+  <header class="store-header">
+    <div class="store-brand">
+      <img src="img/logo-observed.png" alt="OBSERVED" class="store-logo" />
+      <div>
+        <h1>OBSERVED</h1>
+        <p>Streetwear premium</p>
+      </div>
+    </div>
+
+    <nav class="store-nav">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#combos">Combos</a>
+      <a href="#promos">Promos</a>
+      <a href="#contacto">Contacto</a>
+      <a href="admin.html" class="btn btn-soft btn-sm">Admin</a>
+    </nav>
+  </header>
+
+  <main class="store-main">
+    <section class="store-hero">
+      <img src="img/observed-collection.jpg" alt="Colección OBSERVED">
+      <div class="store-hero-overlay"></div>
+      <div class="store-hero-content">
+        <span class="pill">DROP ACTIVO</span>
+        <h2>Observe the street</h2>
+        <p>
+          Prendas con identidad, presencia y una estética limpia. Compra directo por WhatsApp con stock y precios actualizados desde el panel.
+        </p>
+        <div class="hero-actions">
+          <a href="#catalogo" class="btn btn-primary">Ver catálogo</a>
+          <a href="https://wa.me/51936998349?text=Hola,%20quiero%20información%20sobre%20OBSERVED" target="_blank" class="btn btn-dark">
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="store-badges">
+      <div class="badge-card">📍 Piura - Castilla</div>
+      <div class="badge-card">💸 Yape</div>
+      <div class="badge-card">📲 Plin</div>
+      <div class="badge-card">🏦 BCP</div>
+      <div class="badge-card">🚚 Envíos a todo Perú</div>
+    </section>
+
+    <section class="section-block" id="catalogo">
+      <div class="section-head">
+        <div>
+          <h3>Catálogo</h3>
+          <p>Productos visibles para clientes</p>
+        </div>
+        <input type="text" id="storeSearch" class="input search-input" placeholder="Buscar producto...">
+      </div>
+
+      <div id="storeCatalog" class="store-grid"></div>
+      <div id="storeEmpty" class="empty-state hidden">
+        <h4>No hay productos visibles</h4>
+        <p>Activa productos desde el panel admin para mostrarlos aquí.</p>
+      </div>
+    </section>
+
+    <section class="section-block" id="combos">
+      <div class="section-head">
+        <div>
+          <h3>Combos</h3>
+          <p>Arma más ticket promedio</p>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h4>Combo Hoodie + Polo</h4>
+          <p>Ideal para primera compra con mejor percepción de valor.</p>
+          <span class="badge green">S/ 189.90</span>
+        </article>
+
+        <article class="info-card">
+          <h4>Polo + Gorra</h4>
+          <p>Entrada rápida a la marca con ticket accesible.</p>
+          <span class="badge blue">S/ 109.90</span>
+        </article>
+
+        <article class="info-card">
+          <h4>Outfit Completo</h4>
+          <p>Hoodie + polo + gorra con mensaje fuerte de branding.</p>
+          <span class="badge purple">S/ 249.90</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block" id="promos">
+      <div class="section-head">
+        <div>
+          <h3>Promociones</h3>
+          <p>Solo visual de tienda</p>
+        </div>
+      </div>
+
+      <div class="promo-banner">
+        <div>
+          <strong>Promoción activa:</strong>
+          <span>Compra por WhatsApp y consulta combos disponibles del drop actual.</span>
+        </div>
+        <a href="https://wa.me/51936998349?text=Hola,%20quiero%20ver%20las%20promociones%20de%20OBSERVED" target="_blank" class="btn btn-primary btn-sm">
+          Ver promos
+        </a>
+      </div>
+    </section>
+
+    <section class="section-block" id="contacto">
+      <div class="section-head">
+        <div>
+          <h3>Contacto</h3>
+          <p>Venta directa</p>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h4>WhatsApp</h4>
+          <p>936998349</p>
+        </article>
+        <article class="info-card">
+          <h4>Métodos de pago</h4>
+          <p>Yape, Plin y transferencia BCP</p>
+        </article>
+        <article class="info-card">
+          <h4>Envíos</h4>
+          <p>Piura y todo Perú</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
